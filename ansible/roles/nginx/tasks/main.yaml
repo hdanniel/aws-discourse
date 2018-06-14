@@ -1,0 +1,11 @@
+  - name: add nginx repo key
+    copy: src=nginx_signing.key dest=/tmp/nginx_signing.key 
+  - name: add nginx repo key
+    shell: apt-key add /tmp/nginx_signing.key 
+  - name: install nginx
+    apt: name=nginx state=present update_cache=yes allow_unauthenticated=yes 
+  - name: start nginx 
+    service: name=nginx enabled=yes state=started
+  - name: add nginx config 
+    copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+    notify: nginx reload

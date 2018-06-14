@@ -1,0 +1,10 @@
+[ansible]
+127.0.0.1
+
+[discourse-ec2]
+aws-discourse ansible_host=35.170.69.49 ansible_ssh_private_key_file=keys/aws-key-discourse.pem
+
+[aws:children]
+ansible
+discourse-ec2
+

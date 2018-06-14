@@ -1,0 +1,6 @@
+  - name: format device
+    filesystem: fstype="xfs" dev="/dev/xvdb"
+  - name: docker dir
+    file: path=/var/lib/docker state=directory
+  - name: mount device
+    mount: name="/var/lib/docker" src="/dev/xvdb" fstype="xfs" opts=defaults,noatime state=mounted

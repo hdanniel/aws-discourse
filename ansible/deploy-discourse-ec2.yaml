@@ -1,0 +1,33 @@
+- hosts: ansible
+  connection: local
+  gather_facts: False
+  roles:
+- hosts: discourse-ec2
+  gather_facts: False
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  tasks: [ ]
+  remote_user: ubuntu 
+  become: yes 
+  become_user: root
+  become_method: sudo
+- hosts: discourse-ec2
+  pre_tasks:
+    - name: register reboot
+      stat: path=/var/tmp/reboot.txt
+      register: stat_reboot
+  tasks: [ ]
+  remote_user: ubuntu 
+  become: yes 
+  become_user: root
+  become_method: sudo
+- hosts: discourse-ec2 
+  roles:
+      - common
+      - common-discourse
+      - nginx
+      - docker-ce
+  remote_user: ubuntu 
+  become: yes 
+  become_user: root
+  become_method: sudo
